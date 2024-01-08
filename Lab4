@@ -1,0 +1,51 @@
+Лабораторная работа №4, выполненная на языке программирования Rust
+Пример кода программы календарь с задачами на языке Rust:
+
+use std::collections::HashMap;
+
+struct Task {
+    description: String,
+    due_date: String,
+}
+
+struct Calendar {
+    tasks: HashMap<String, Vec<Task>>,
+}
+
+impl Calendar {
+    fn new() -> Calendar {
+        Calendar { tasks: HashMap::new() }
+    }
+
+    fn add_task(&mut self, date: &str, task: Task) {
+        self.tasks.entry(date.to_string()).or_insert(vec![]).push(task);
+    }
+
+    fn print_tasks(&self) {
+        for (date, tasks) in &self.tasks {
+            println!("Date: {}", date);
+            for task in tasks {
+                println!("Task: {}", task.description);
+                println!("Due date: {}", task.due_date);
+            }
+        }
+    }
+}
+
+fn main() {
+    let mut my_calendar = Calendar::new();
+
+    let task1 = Task {
+        description: String::from("Complete Rust project"),
+        due_date: String::from("2022-12-31"),
+    };
+    my_calendar.add_task("2022-12-30", task1);
+
+    let task2 = Task {
+        description: String::from("Study Rust programming language"),
+        due_date: String::from("2022-11-15"),
+    };
+    my_calendar.add_task("2022-11-15", task2);
+
+    my_calendar.print_tasks();
+}

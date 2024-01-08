@@ -1,0 +1,23 @@
+Лабораторная работа №3, выполненная на языке программирования Haskell
+Пример кода программы календарь с задачами на языке Haskell:
+data Task = Task { description :: String, dueDate :: UTCTime }
+
+import Data.Time
+
+type Calendar = [Task]
+
+addTask :: Calendar -> Task -> Calendar
+addTask calendar task = task : calendar
+
+displayTasks :: Calendar -> IO ()
+displayTasks calendar =
+  case calendar of
+    [] -> putStrLn "No tasks scheduled."
+    _  -> mapM_ (\task -> putStrLn $ "Task: " ++ (description task) ++ ", Due Date: " ++ (show $ dueDate task)) calendar
+
+main :: IO ()
+main = do
+  let initialCalendar = []
+      updatedCalendar = addTask initialCalendar (Task { description = "Сходить в спортзал", dueDate = UTCTime (fromGregorian 2024 1 10) (secondsToDiffTime 0) })
+      finalCalendar = addTask updatedCalendar (Task { description = "Написать отчет", dueDate = UTCTime (fromGregorian 2024 1 15) (secondsToDiffTime 0) })
+  displayTasks finalCalendar

@@ -1,0 +1,24 @@
+Лабораторная работа №2, выполненная на языке программирования F#
+Пример кода программы календарь с задачами на языке F#:
+type Task = { Description: string; DueDate: System.DateTime }
+module Calendar =
+
+    let tasks = ref []
+
+    let addTask description dueDate =
+        tasks := { Description = description; DueDate = dueDate } :: !tasks
+
+    let displayTasks () =
+        match !tasks with
+        | [] -> printfn "No tasks scheduled."
+        | taskList ->
+            taskList
+            |> List.iter (fun task -> printfn "Task: %s, Due Date: %s" task.Description (task.DueDate.ToShortDateString()))
+open System
+
+// Добавляем задачи
+Calendar.addTask "Сходить в спортзал" (DateTime(2024, 1, 10))
+Calendar.addTask "Написать отчет" (DateTime(2024, 1, 15))
+
+// Отображаем задачи
+Calendar.displayTasks()

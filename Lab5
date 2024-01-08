@@ -1,0 +1,33 @@
+Лабораторная работа №4, выполненная на языке программирования Rust
+Пример кода программы календарь с задачами на языке Rust:
+class Task:
+    def __init__(self, description, due_date):
+        self.description = description
+        self.due_date = due_date
+
+class Calendar:
+    def __init__(self):
+        self.tasks = {}
+
+    def add_task(self, date, task):
+        if date in self.tasks:
+            self.tasks[date].append(task)
+        else:
+            self.tasks[date] = [task]
+
+    def print_tasks(self):
+        for date, tasks in self.tasks.items():
+            print("Date:", date)
+            for task in tasks:
+                print("Task:", task.description)
+                print("Due date:", task.due_date)
+
+my_calendar = Calendar()
+
+task1 = Task("Complete Python project", "2022-12-31")
+my_calendar.add_task("2022-12-30", task1)
+
+task2 = Task("Study Python programming language", "2022-11-15")
+my_calendar.add_task("2022-11-15", task2)
+
+my_calendar.print_tasks()

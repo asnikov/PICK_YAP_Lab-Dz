@@ -1,0 +1,57 @@
+Лабораторная работа №1, выполненная на языке программирования C#
+Пример кода программы календарь с задачами на языке C#:
+using System;
+using System.Collections.Generic;
+
+// Класс представляющий задачу
+class Task
+{
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DateTime DueDate { get; set; }
+    public bool IsCompleted { get; set; }
+}
+
+// Класс представляющий день в календаре
+class CalendarDay
+{
+    public DateTime Date { get; set; }
+    public List<Task> Tasks { get; set; }
+}
+
+// Пример использования модели календаря
+class Program
+{
+    static void Main()
+    {
+        // Создание календаря на текущий месяц
+        List<CalendarDay> calendar = new List<CalendarDay>();
+        DateTime currentDate = DateTime.Today;
+
+        for (int i = 0; i < DateTime.DaysInMonth(currentDate.Year, currentDate.Month); i++)
+        {
+            CalendarDay day = new CalendarDay { Date = new DateTime(currentDate.Year, currentDate.Month, i + 1), Tasks = new List<Task>() };
+            calendar.Add(day);
+        }
+
+        // Пример добавления задачи на определенный день
+        Task task1 = new Task
+        {
+            Title = "Задача 1",
+            Description = "Описание задачи 1",
+            DueDate = calendar[10].Date, // Привязка календарной задачи к определенному дню
+            IsCompleted = false
+        };
+        calendar[10].Tasks.Add(task1);
+        
+        // Пример вывода списка задач для определенного дня
+        DateTime dateToDisplay = new DateTime(currentDate.Year, currentDate.Month, 11);
+        var tasksForSelectedDate = calendar.Find(d => d.Date == dateToDisplay).Tasks;
+        
+        Console.WriteLine("Задачи на " + dateToDisplay.ToShortDateString() + ":");
+        foreach (var task in tasksForSelectedDate)
+        {
+            Console.WriteLine(" - " + task.Title);
+        }
+    }
+}
